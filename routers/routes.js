@@ -2,12 +2,12 @@ const express = require("express")
 
 const router = express.Router()
 
-const funcs = require("../controllers/functions")
+const {showId, index, destroy, search} = require("../controllers/functions")
 
 module.exports = router 
 
-router.get("/:id", funcs.showId)
+router.get("/:id", showId)
 
-router.get("/", funcs.index)
+router.delete("/:id", destroy)
 
-router.delete("/:id", funcs.destroy)
+router.get("/", index)

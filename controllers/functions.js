@@ -5,7 +5,15 @@ const findCurPost = (arr, id) =>{
 }
 
 const index = (req, resp) =>{
-    resp.json(arrayP)
+
+    const searchTerm = req.query.tags
+    
+    if (searchTerm !== undefined){
+        postFound = arrayP.filter((curPost) => curPost.tags.includes(searchTerm))
+        resp.json(postFound)
+    } else{
+        resp.json(arrayP)
+    }
 }
 
 const showId = (req, resp) =>{
@@ -24,16 +32,18 @@ const showId = (req, resp) =>{
 }
 
 const destroy = (req, resp) =>{
-    let idPost = parseInt(req.params.id)
+    let idPost = parseInt(req.params.id);
+    
     let deletedPostIndex = arrayP.findIndex((curPost) =>(curPost.id === idPost))
     if (idPost === -1) {
         resp.statusCode = 404
         resp.json({
-            error:true,
             message:"Post non trovato"
         })
     }else{
-        arrayP.splice(deletedPostIndex, 1)
+        arrayP.splice(deletedPostIndex, 1);
+        resp.statusCode = 204;
+        resp.json(arrayP);
     }
 }
 
